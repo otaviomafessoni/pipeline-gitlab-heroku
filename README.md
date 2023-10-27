@@ -5,8 +5,10 @@
 Crie uma API KEY caso ainda não tenha na sua conta.
 
 As variaveis utilizadas na pipeline:
-HEROKU_PRODUCTION_KEY = API KEY
-HEROKU_APP_NAME = nome do seu projeto
+
+- HEROKU_PRODUCTION_KEY = API KEY
+
+- HEROKU_APP_NAME = nome do seu projeto
 
 ## PARA INSTALAR O RUNNER NO SEU GITLAB
 
