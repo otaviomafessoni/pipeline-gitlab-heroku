@@ -84,3 +84,17 @@ shutdown_timeout = 0
   [runners.cache]
 	MaxUploadedArchiveSize = 0
 ```
+
+## BONUS
+
+Para deixar o runner rodando em background
+
+Abre o contrab e adicione o comando abaixo:
+
+```bash
+sudo crontab -e
+```
+
+```bash
+@reboot sudo gitlab-runner run
+```
