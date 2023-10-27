@@ -1,0 +1,40 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  services:
+    - docker:dind
+  tags:
+    - meuprojeto
+  only:
+    variables:
+      - '$CI_COMMIT_BRANCH == "master"'
+
+  variables:
+    IMAGE_NAME: $HEROKU_APP_NAME
+    TAG_LATEST: $IMAGE_NAME:latest
+    TAG_COMMIT: $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    DOCKER_TLS_CERTDIR: ""
+
+  script:
+    - echo "Buildando o projeto"
+    - docker build -t "$TAG_COMMIT" .
+
+deploy:
+  stage: deploy
+  needs: [build]
+  tags:
+    - meuprojeto
+  only:
+    variables:
+      - '$CI_COMMIT_BRANCH == "master"'
+
+  before_script:
+    - apk update
+    - apk add ruby git curl
+    - gem install dpl
+  script:
+    - echo "Fazendo o deploy na heroku"
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
